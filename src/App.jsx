@@ -3,7 +3,7 @@ import { Dashboard } from './Components/Dashboard'
 import './App.css'
 import './index.css'
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Navigate
