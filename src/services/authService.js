@@ -66,7 +66,7 @@ export const authService = {
         try{
             const userInfo = decodeToken(token);
             return userInfo.exp * 1000 > Date.now()
-        } catch (error){
+        } catch {
             return false;
         }
     },
@@ -75,7 +75,7 @@ export const authService = {
         try{
             const userInfo = localStorage.getItem("userInfo");
             return userInfo ? JSON.parse(userInfo) : null;
-        }catch(error){
+        }catch{
             return null;
         }
     },

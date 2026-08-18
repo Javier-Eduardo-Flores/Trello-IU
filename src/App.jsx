@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { Dashboard } from './Components/Dashboard'
+import { KanbanBoard } from './Components/KanbanBoard'
 import './App.css'
-import './index.css'
 import {
   HashRouter as Router,
   Routes,
@@ -34,11 +33,17 @@ function App() {
                               <Dashboard/>
                         </ProtectedRoute>
                 }/>
-                <Route path='/signup'  element={
-                        
-                              <SignUpScreen/>
-                        
+                <Route path='/workspace/:id'  element={
+                        <ProtectedRoute>
+                              <KanbanBoard/>
+                        </ProtectedRoute>
                 }/>
+                <Route path='/signup'  element={
+                  <PublicRoute>
+                    <SignUpScreen/>
+                  </PublicRoute>
+                }/>
+                <Route path='*' element={<Navigate to="/login" replace />} />
 
              </Routes>
            </div>
