@@ -52,6 +52,17 @@ src/
 - **Modales**: Escape para cerrar, reset de formulario al cerrar
 - **Manejo de errores**: Mensajes de error en modales de eliminación, fallback en carga de datos
 
+## Capturas
+
+### Login
+![Login](docs/screenshots/Login.png)
+
+### Dashboard
+![Dashboard](docs/screenshots/Dashboard.png)
+
+### Kanban Board
+![Kanban](docs/screenshots/Kanban.png)
+
 ## Desarrollo
 
 ```bash
