@@ -1,12 +1,14 @@
 import { useState } from "react"
-import { Navigate, useNavigate, Link} from "react-router-dom"
+import { useNavigate, Link} from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import { Eye, EyeOff } from "lucide-react"
 
 export const LoginScreen = ()=>{
 
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [loading,setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const {login} = useAuth();
     const navigate = useNavigate();
 
@@ -53,12 +55,18 @@ export const LoginScreen = ()=>{
 
                     <div className="flex flex-col">
                         <label className="text-[13px] font-medium text-redblack" htmlFor="password">Contraseña</label>
-                        <input className="bg-greenp text-[13px] p-2 outline-none rounded-md text-amber-50" 
-                        type="password" placeholder="***********"
-                        value={password}
-                        onChange={(e)=>setPassword(e.target.value)}
-                        id="passport"
-                         required/>
+                        <div className="relative">
+                            <input className="bg-greenp text-[13px] p-2 pr-9 outline-none rounded-md text-amber-50 w-full" 
+                            type={showPassword ? "text" : "password"} placeholder="***********"
+                            value={password}
+                            onChange={(e)=>setPassword(e.target.value)}
+                            id="password"
+                             required/>
+                            <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-50 cursor-pointer"
+                            onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}
+                            </button>
+                        </div>
                     </div>
                    
                     <button className="bg-redblack px-1.5 py-2 mt-2 rounded-md text-[14px] text-fondo2 font-bold cursor-pointer hover:bg-redsecond hover:scale-101 transition-all hover:shadow-2xs hover:shadow-redsecond" type="submit" disabled ={loading}>

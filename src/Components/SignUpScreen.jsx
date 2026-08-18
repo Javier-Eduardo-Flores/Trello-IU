@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { Navigate, useNavigate, Link} from "react-router-dom"
+import { useNavigate, Link} from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { validatePassword, isValidEmail,getPasswordStrength } from "../utils/validator"
+import { Eye, EyeOff } from "lucide-react"
 export const SignUpScreen = () => {
     const [formData,setFormData] = useState(
         {
@@ -15,6 +16,8 @@ export const SignUpScreen = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     
     const { register } = useAuth(); 
     const navigate = useNavigate();
@@ -42,25 +45,30 @@ export const SignUpScreen = () => {
         if(!formData.name.trim()){
             setError("Ingresa un nombre")
             setIsSubmitting(false);
+            return;
         }
 
          if(!formData.email.trim()){
             setError("Ingresa un correo")
             setIsSubmitting(false);
+            return;
         }
 
          if(!formData.password.trim()){
             setError("Ingresa una contraseña")
             setIsSubmitting(false);
+            return;
         }
          if(!formData.confirmPassword.trim()){
             setError("Ingresa tu confirmacion de contraseña")
             setIsSubmitting(false);
+            return;
         }
 
         if(!isValidEmail(formData.email)){
             setError("Por favor ingresa un email valido")
             setIsSubmitting(false);
+            return;
         }
 
         const passwordValidation = validatePassword(formData.password);
@@ -142,13 +150,19 @@ export const SignUpScreen = () => {
 
                     <div className="flex flex-col">
                         <label className="text-[13px] font-medium text-redblack" htmlFor="SignUp">Contraseña</label>
-                        <input className="bg-greenp text-[13px] p-2 outline-none rounded-md text-amber-50" 
-                        type="password" placeholder="***********" 
-                        id="password"
-                        name = "password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required/>
+                        <div className="relative">
+                            <input className="bg-greenp text-[13px] p-2 pr-9 outline-none rounded-md text-amber-50 w-full" 
+                            type={showPassword ? "text" : "password"} placeholder="***********" 
+                            id="password"
+                            name = "password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required/>
+                            <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-50 cursor-pointer"
+                            onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}
+                            </button>
+                        </div>
 
                          {formData.password && (
                             <div className="mt-2">
@@ -184,13 +198,19 @@ export const SignUpScreen = () => {
 
                     <div className="flex flex-col">
                         <label className="text-[13px] font-medium text-redblack" htmlFor="SignUp">Confirmar Contraseña</label>
-                        <input className="bg-greenp text-[13px] p-2 outline-none rounded-md text-amber-50" 
-                        type="password" placeholder="***********" 
-                        id="confirmPassword"
-                        name = "confirmPassword"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        required/>
+                        <div className="relative">
+                            <input className="bg-greenp text-[13px] p-2 pr-9 outline-none rounded-md text-amber-50 w-full" 
+                            type={showConfirmPassword ? "text" : "password"} placeholder="***********" 
+                            id="confirmPassword"
+                            name = "confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required/>
+                            <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-amber-50 cursor-pointer"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                {showConfirmPassword ? <EyeOff size={16}/> : <Eye size={16}/>}
+                            </button>
+                        </div>
                     </div>
                    
                     <button className="bg-redblack px-1.5 py-2 mt-2 rounded-md text-[14px] text-fondo2 font-bold cursor-pointer hover:bg-redsecond hover:scale-102 transition-all hover:shadow-2xs hover:shadow-redsecond" 
